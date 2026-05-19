@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Diet & Workout Planner 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FFFFFF;
+  --navy: #0F2C59;
+  --navy-light: #1B365D;
+  --navy-mid: #2E5A82;
+  --navy-pale: #4A7AB5;
+  --navy-faint: #8FA8C8;
+  --navy-glass: rgba(15,44,89,0.07);
+  --gray-card: #F8F9FA;
+  --gray-border: #E4E9F0;
+  --gray-text: #6B7280;
+  --gray-light: #C8D4E3;
+  --white: #FFFFFF;
+  --danger-bg: #FEF2F2;
+  --danger-border: #FECACA;
+  --danger-text: #991B1B;
+  --success-bg: #F0FDF4;
+  --success-border: #BBF7D0;
+  --success-text: #166534;
+  --warning-bg: #FFFBEB;
+  --warning-text: #92400E;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 2px 8px rgba(15,44,89,0.07), 0 1px 2px rgba(15,44,89,0.05);
+  --shadow-md: 0 4px 20px rgba(15,44,89,0.11);
+  --transition: all 0.2s ease;
+  --font: 'Poppins', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:16px;scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;}
+body{font-family:var(--font);background:var(--bg);color:var(--navy);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:32px;}
+
+/* ── Layout ── */
+.app{max-width:1200px;margin:0 auto;padding:clamp(10px,2vw,20px);}
+
+/* ── Header ── */
+.app-header{background:var(--navy);color:#fff;border-radius:var(--radius);padding:clamp(16px,3vw,28px) clamp(16px,3vw,24px);margin-bottom:clamp(12px,2vw,18px);position:relative;overflow:hidden;}
+.app-header::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:rgba(255,255,255,0.04);border-radius:50%;}
+.app-header::after{content:'';position:absolute;bottom:-60px;left:-20px;width:160px;height:160px;background:rgba(255,255,255,0.03);border-radius:50%;}
+.header-inner{position:relative;z-index:1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;}
+.header-left h1{font-size:clamp(1.1rem,2.5vw,1.55rem);font-weight:700;letter-spacing:-0.3px;line-height:1.3;}
+.header-left .sub{font-size:clamp(0.72rem,1.6vw,0.85rem);opacity:.75;font-weight:300;margin-top:3px;}
+.badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:3px 10px;font-size:0.72rem;font-weight:500;color:#fff;white-space:nowrap;}
+.header-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.btn-header{background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:8px 14px;border-radius:8px;font-family:var(--font);font-size:0.78rem;font-weight:500;cursor:pointer;transition:var(--transition);touch-action:manipulation;min-height:38px;white-space:nowrap;}
+.btn-header:hover{background:rgba(255,255,255,0.22);}
+
+/* ── Stats Strip ── */
+.stats-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,1.5vw,12px);margin-bottom:clamp(12px,2vw,18px);}
+.stat-card{background:var(--gray-card);border:1px solid var(--gray-border);border-radius:var(--radius-sm);padding:clamp(12px,2vw,16px);text-align:center;}
+.stat-card .val{font-size:clamp(1.25rem,3vw,1.8rem);font-weight:700;color:var(--navy);line-height:1;}
+.stat-card .lbl{font-size:clamp(0.65rem,1.4vw,0.75rem);color:var(--gray-text);margin-top:3px;font-weight:500;}
+.stat-card .delta{font-size:0.7rem;color:var(--navy-pale);margin-top:2px;}
+
+/* ── Contribution Grid ── */
+.contrib-section{background:var(--gray-card);border:1px solid var(--gray-border);border-radius:var(--radius);padding:clamp(14px,2vw,18px);margin-bottom:clamp(12px,2vw,18px);}
+.contrib-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.contrib-header h3{font-size:0.85rem;font-weight:600;color:var(--navy);}
+.contrib-legend{display:flex;align-items:center;gap:5px;font-size:0.65rem;color:var(--gray-text);}
+.contrib-legend span{display:inline-block;width:11px;height:11px;border-radius:3px;}
+.contrib-scroll{overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;}
+.contrib-grid{display:flex;gap:3px;min-width:max-content;}
+.contrib-week{display:flex;flex-direction:column;gap:3px;}
+.contrib-day{width:13px;height:13px;border-radius:3px;cursor:pointer;transition:var(--transition);flex-shrink:0;}
+.contrib-day:hover{transform:scale(1.3);}
+.contrib-day[data-pct="0"]{background:#E4E9F0;}
+.contrib-day[data-pct="1"]{background:#C8D4E3;}
+.contrib-day[data-pct="2"]{background:#8FA8C8;}
+.contrib-day[data-pct="3"]{background:#4A7AB5;}
+.contrib-day[data-pct="4"]{background:#0F2C59;}
+
+/* ── Dashboard Grid ── */
+.dashboard{display:grid;grid-template-columns:1fr;gap:clamp(10px,2vw,16px);}
+@media(min-width:768px){
+  .dashboard{grid-template-columns:340px 1fr;}
+  .col-left{display:flex;flex-direction:column;gap:14px;}
+  .col-right{display:flex;flex-direction:column;gap:14px;}
+}
+
+/* ── Cards ── */
+.card{background:var(--gray-card);border:1px solid var(--gray-border);border-radius:var(--radius);padding:clamp(14px,2.5vw,20px);box-shadow:var(--shadow);}
+.card-title{font-size:0.8rem;font-weight:600;color:var(--gray-text);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.card-title .icon{font-size:1rem;}
+
+/* ── Calendar ── */
+.cal-header{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.cal-nav{background:none;border:1px solid var(--gray-border);border-radius:8px;width:36px;height:36px;cursor:pointer;font-size:1rem;color:var(--navy);transition:var(--transition);touch-action:manipulation;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.cal-nav:hover{background:var(--navy);color:#fff;}
+.cal-month-select{flex:1;appearance:none;background:var(--white);border:1px solid var(--gray-border);border-radius:8px;padding:6px 10px;font-family:var(--font);font-size:0.85rem;font-weight:600;color:var(--navy);cursor:pointer;text-align:center;}
+.cal-month-select:focus{outline:2px solid var(--navy-pale);outline-offset:2px;}
+.cal-scroll-wrap{overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;margin-bottom:4px;}
+.cal-week-labels{display:flex;gap:4px;min-width:max-content;margin-bottom:4px;}
+.cal-week-label{width:44px;text-align:center;font-size:0.62rem;font-weight:600;color:var(--gray-text);text-transform:uppercase;flex-shrink:0;}
+.cal-days-row{display:flex;gap:4px;min-width:max-content;}
+.cal-day-btn{width:44px;height:54px;border-radius:10px;border:2px solid transparent;background:var(--white);cursor:pointer;transition:var(--transition);touch-action:manipulation;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex-shrink:0;position:relative;}
+.cal-day-btn .day-num{font-size:0.9rem;font-weight:600;color:var(--navy);line-height:1;}
+.cal-day-btn .day-name{font-size:0.55rem;font-weight:500;color:var(--gray-text);text-transform:uppercase;}
+.cal-day-btn .day-dot{width:5px;height:5px;border-radius:50%;background:transparent;margin-top:1px;}
+.cal-day-btn.today{border-color:var(--navy);}
+.cal-day-btn.today .day-num{color:var(--navy);}
+.cal-day-btn.selected{background:var(--navy);border-color:var(--navy);}
+.cal-day-btn.selected .day-num,.cal-day-btn.selected .day-name{color:#fff;}
+.cal-day-btn.has-data .day-dot{background:var(--navy-pale);}
+.cal-day-btn.selected .day-dot{background:rgba(255,255,255,0.7);}
+.cal-day-btn:hover:not(.selected){background:var(--navy-glass);border-color:var(--navy-faint);}
+.cal-day-btn.fasting-day{background:#EEF4FF;}
+.cal-day-btn.fasting-day .day-name{color:var(--navy-pale);}
+
+/* ── Weight Card ── */
+.weight-display{text-align:center;margin-bottom:12px;}
+.weight-display .current-w{font-size:2.5rem;font-weight:700;color:var(--navy);line-height:1;}
+.weight-display .unit{font-size:1rem;font-weight:400;opacity:.6;}
+.weight-display .target-lbl{font-size:0.75rem;color:var(--gray-text);margin-top:4px;}
+.progress-bar-wrap{margin-bottom:12px;}
+.progress-bar-track{background:var(--gray-border);border-radius:99px;height:10px;overflow:hidden;}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--navy-pale),var(--navy));border-radius:99px;transition:width 0.5s ease;}
+.progress-bar-labels{display:flex;justify-content:space-between;font-size:0.65rem;color:var(--gray-text);margin-top:4px;}
+.btn-update-w{width:100%;padding:10px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-family:var(--font);font-size:0.82rem;font-weight:600;cursor:pointer;transition:var(--transition);touch-action:manipulation;min-height:44px;}
+.btn-update-w:hover{background:var(--navy-light);}
+.weight-input-inline{display:none;flex-direction:column;gap:8px;margin-top:10px;}
+.weight-input-inline.show{display:flex;}
+.weight-input-inline input{width:100%;padding:10px 12px;border:2px solid var(--navy-pale);border-radius:10px;font-family:var(--font);font-size:1rem;font-weight:600;color:var(--navy);text-align:center;outline:none;}
+.weight-input-inline input:focus{border-color:var(--navy);}
+.weight-input-inline .btn-row{display:flex;gap:8px;}
+.weight-input-inline .btn-row button{flex:1;padding:9px;border-radius:9px;font-family:var(--font);font-size:0.8rem;font-weight:600;cursor:pointer;transition:var(--transition);touch-action:manipulation;min-height:44px;border:none;}
+.btn-confirm-w{background:var(--navy);color:#fff;}
+.btn-cancel-w{background:var(--gray-border);color:var(--navy);}
+
+/* ── Day Mode Banner ── */
+.mode-banner{border-radius:10px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.mode-banner.fasting{background:#EEF4FF;border:1px solid #C7D9F5;}
+.mode-banner.if{background:#F0FFF4;border:1px solid #BBF7D0;}
+.mode-banner .mode-icon{font-size:1.3rem;flex-shrink:0;}
+.mode-banner .mode-text{flex:1;}
+.mode-banner .mode-title{font-size:0.82rem;font-weight:700;color:var(--navy);}
+.mode-banner .mode-desc{font-size:0.72rem;color:var(--gray-text);}
+
+/* ── Countdown ── */
+.countdown-box{background:var(--navy);color:#fff;border-radius:10px;padding:10px 14px;text-align:center;margin-bottom:12px;}
+.countdown-box .ctd-label{font-size:0.7rem;opacity:.8;font-weight:400;}
+.countdown-box .ctd-time{font-size:1.6rem;font-weight:700;letter-spacing:2px;font-variant-numeric:tabular-nums;}
+.countdown-box .ctd-status{font-size:0.72rem;opacity:.85;margin-top:2px;}
+
+/* ── Meal Checklist ── */
+.meal-list{display:flex;flex-direction:column;gap:8px;}
+.meal-item{background:var(--white);border:1.5px solid var(--gray-border);border-radius:12px;padding:12px 14px;display:flex;align-items:flex-start;gap:12px;transition:var(--transition);cursor:pointer;touch-action:manipulation;}
+.meal-item:hover{border-color:var(--navy-pale);}
+.meal-item.checked{background:#EEF4FF;border-color:var(--navy-pale);}
+.meal-check{width:24px;height:24px;border-radius:6px;border:2px solid var(--gray-light);background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:var(--transition);margin-top:2px;}
+.meal-item.checked .meal-check{background:var(--navy);border-color:var(--navy);}
+.meal-check svg{display:none;}
+.meal-item.checked .meal-check svg{display:block;}
+.meal-info{flex:1;}
+.meal-name{font-size:0.85rem;font-weight:600;color:var(--navy);}
+.meal-time{font-size:0.7rem;color:var(--navy-pale);font-weight:500;}
+.meal-detail{font-size:0.72rem;color:var(--gray-text);margin-top:3px;line-height:1.5;}
+.meal-badge{display:inline-block;background:var(--navy-glass);border:1px solid var(--navy-faint);border-radius:5px;font-size:0.62rem;color:var(--navy);padding:1px 6px;margin-top:4px;font-weight:500;}
+
+/* ── Fasting Window ── */
+.fasting-window{border-radius:10px;padding:10px 14px;background:var(--warning-bg);border:1px solid #FDE68A;margin-top:8px;}
+.fw-title{font-size:0.75rem;font-weight:600;color:var(--warning-text);margin-bottom:6px;}
+.fw-bar-wrap{height:10px;background:#FEF3C7;border-radius:99px;overflow:hidden;position:relative;}
+.fw-bar-fill{height:100%;background:linear-gradient(90deg,#F59E0B,#D97706);border-radius:99px;}
+.fw-labels{display:flex;justify-content:space-between;font-size:0.62rem;color:var(--warning-text);margin-top:3px;}
+
+/* ── Workout Card ── */
+.workout-list{display:flex;flex-direction:column;gap:8px;}
+.workout-item{background:var(--white);border:1.5px solid var(--gray-border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;transition:var(--transition);cursor:pointer;touch-action:manipulation;}
+.workout-item:hover{border-color:var(--navy-pale);}
+.workout-item.checked{background:#EEF4FF;border-color:var(--navy-pale);}
+.workout-check{width:24px;height:24px;border-radius:6px;border:2px solid var(--gray-light);background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:var(--transition);}
+.workout-item.checked .workout-check{background:var(--navy);border-color:var(--navy);}
+.workout-check svg{display:none;}
+.workout-item.checked .workout-check svg{display:block;}
+.workout-info{flex:1;}
+.workout-name{font-size:0.85rem;font-weight:600;color:var(--navy);}
+.workout-sub{font-size:0.72rem;color:var(--gray-text);}
+.steps-input-wrap{margin-top:8px;display:none;}
+.steps-input-wrap.show{display:block;}
+.steps-input-wrap input{width:100%;padding:8px 12px;border:1.5px solid var(--gray-border);border-radius:8px;font-family:var(--font);font-size:0.85rem;color:var(--navy);outline:none;}
+.steps-input-wrap input:focus{border-color:var(--navy);}
+
+/* ── Water Tracker ── */
+.water-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px;}
+.glass-btn{background:var(--white);border:1.5px solid var(--gray-border);border-radius:10px;padding:8px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:var(--transition);touch-action:manipulation;min-height:60px;justify-content:center;}
+.glass-btn:hover{border-color:var(--navy-pale);}
+.glass-btn.filled{background:#EEF4FF;border-color:var(--navy-pale);}
+.glass-icon{font-size:1.4rem;line-height:1;}
+.glass-lbl{font-size:0.6rem;font-weight:500;color:var(--gray-text);}
+.glass-btn.filled .glass-lbl{color:var(--navy);}
+.water-total{text-align:center;font-size:0.78rem;color:var(--gray-text);font-weight:500;}
+.water-total span{color:var(--navy);font-weight:700;}
+
+/* ── Food Restrictions ── */
+.restrictions-card{background:var(--danger-bg);border:1px solid var(--danger-border);border-radius:var(--radius);padding:clamp(14px,2.5vw,18px);}
+.restrictions-card .card-title{color:var(--danger-text);}
+.restriction-list{display:flex;flex-direction:column;gap:8px;}
+.restriction-item{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;background:#fff;border:1px solid var(--danger-border);border-radius:10px;}
+.restriction-item .r-icon{font-size:1rem;flex-shrink:0;margin-top:2px;}
+.restriction-item .r-text{flex:1;}
+.restriction-item .r-name{font-size:0.82rem;font-weight:600;color:var(--danger-text);}
+.restriction-item .r-why{font-size:0.7rem;color:#B91C1C;margin-top:1px;}
+
+/* ── Weight Log List ── */
+.weight-log-list{max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;}
+.weight-log-item{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--white);border:1px solid var(--gray-border);border-radius:8px;font-size:0.78rem;}
+.weight-log-item .log-date{color:var(--gray-text);}
+.weight-log-item .log-w{font-weight:700;color:var(--navy);}
+.weight-log-item .log-delta{font-size:0.7rem;}
+.log-up{color:#DC2626;}
+.log-down{color:#16A34A;}
+
+/* ── Export/Import ── */
+.data-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.btn-data{flex:1;min-width:120px;padding:10px 14px;border-radius:10px;font-family:var(--font);font-size:0.8rem;font-weight:600;cursor:pointer;transition:var(--transition);touch-action:manipulation;min-height:44px;border:1.5px solid var(--navy);color:var(--navy);background:#fff;}
+.btn-data:hover{background:var(--navy);color:#fff;}
+.btn-data.danger{border-color:#DC2626;color:#DC2626;}
+.btn-data.danger:hover{background:#DC2626;color:#fff;}
+#import-file{display:none;}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--gray-light);border-radius:99px;}
+
+/* ── Toast ── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--navy);color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:500;opacity:0;transition:all 0.3s ease;z-index:9999;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── Mobile adjustments ── */
+@media(max-width:767px){
+  .stats-strip{grid-template-columns:repeat(3,1fr);}
+  .water-grid{grid-template-columns:repeat(4,1fr);}
+  .cal-day-btn{width:40px;height:50px;}
+  .cal-week-label{width:40px;}
+}
+@media(max-width:420px){
+  .stats-strip{grid-template-columns:1fr 1fr;}
+  .stat-card:last-child{grid-column:1/-1;}
+  .header-actions{width:100%;}
+  .btn-header{flex:1;}
+}
+
+/* ── Section divider ── */
+.section-label{font-size:0.7rem;font-weight:600;color:var(--gray-text);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ── Header ── -->
+  <div class="app-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <h1>🥗 Diet & Workout Planner</h1>
+        <div class="sub">IF 16:8 · Puasa Sunnah Senin-Kamis · Target Desember 2026</div>
+        <div class="badge-row">
+          <span class="badge">87 kg → ~61 kg</span>
+          <span class="badge">0.5–0.8 kg/minggu</span>
+          <span class="badge">Mei – Des 2026</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-header" onclick="exportData()">⬇ Export</button>
+        <button class="btn-header" onclick="document.getElementById('import-file').click()">⬆ Import</button>
+        <input type="file" id="import-file" accept=".json" onchange="importData(event)">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Stats Strip ── -->
+  <div class="stats-strip" id="stats-strip">
+    <div class="stat-card">
+      <div class="val" id="stat-current-w">87.0</div>
+      <div class="lbl">Berat Saat Ini (kg)</div>
+      <div class="delta" id="stat-delta">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="val" id="stat-streak">0</div>
+      <div class="lbl">Current Streak 🔥</div>
+      <div class="delta">hari berturut-turut</div>
+    </div>
+    <div class="stat-card">
+      <div class="val" id="stat-adherence">0%</div>
+      <div class="lbl">Adherence Rate</div>
+      <div class="delta" id="stat-days-logged">0 hari dicatat</div>
+    </div>
+  </div>
+
+  <!-- ── Contribution Grid ── -->
+  <div class="contrib-section">
+    <div class="contrib-header">
+      <h3>📊 Progress Heatmap (Mei – Des 2026)</h3>
+      <div class="contrib-legend">
+        <span style="background:#E4E9F0"></span>
+        <span style="background:#C8D4E3"></span>
+        <span style="background:#8FA8C8"></span>
+        <span style="background:#4A7AB5"></span>
+        <span style="background:#0F2C59"></span>
+        Kurang → Sempurna
+      </div>
+    </div>
+    <div class="contrib-scroll">
+      <div class="contrib-grid" id="contrib-grid"></div>
+    </div>
+  </div>
+
+  <!-- ── Dashboard ── -->
+  <div class="dashboard">
+    <!-- LEFT COLUMN -->
+    <div class="col-left">
+
+      <!-- Calendar -->
+      <div class="card">
+        <div class="card-title"><span class="icon">📅</span> Kalender</div>
+        <div class="cal-header">
+          <button class="cal-nav" id="cal-prev" onclick="calPrev()">‹</button>
+          <select class="cal-month-select" id="cal-month-sel" onchange="calJumpMonth(this.value)"></select>
+          <button class="cal-nav" id="cal-next" onclick="calNext()">›</button>
+        </div>
+        <div class="cal-scroll-wrap">
+          <div class="cal-week-labels" id="cal-week-labels"></div>
+          <div class="cal-days-row" id="cal-days-row"></div>
+        </div>
+      </div>
+
+      <!-- Weight Tracker -->
+      <div class="card">
+        <div class="card-title"><span class="icon">⚖️</span> Berat Badan</div>
+        <div class="weight-display">
+          <div class="current-w" id="wt-display">87.0 <span class="unit">kg</span></div>
+          <div class="target-lbl">Target: ~61 kg | BMI Ideal</div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="wt-bar" style="width:0%"></div>
+          </div>
+          <div class="progress-bar-labels">
+            <span>87 kg (Mulai)</span>
+            <span id="wt-progress-pct">0%</span>
+            <span>61 kg (Target)</span>
+          </div>
+        </div>
+        <button class="btn-update-w" onclick="toggleWeightInput()">Update Berat Badan</button>
+        <div class="weight-input-inline" id="wt-input-wrap">
+          <input type="number" id="wt-input" step="0.1" min="40" max="200" placeholder="Masukkan berat (kg)">
+          <div class="btn-row">
+            <button class="btn-confirm-w" onclick="confirmWeight()">✓ Simpan</button>
+            <button class="btn-cancel-w" onclick="cancelWeightInput()">Batal</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Weight Log -->
+      <div class="card">
+        <div class="card-title"><span class="icon">📈</span> Log Berat Badan</div>
+        <div class="weight-log-list" id="weight-log-list">
+          <div style="color:var(--gray-text);font-size:0.78rem;text-align:center;padding:12px;">Belum ada log.</div>
+        </div>
+      </div>
+
+      <!-- Data Management -->
+      <div class="card">
+        <div class="card-title"><span class="icon">💾</span> Manajemen Data</div>
+        <div class="data-actions">
+          <button class="btn-data" onclick="exportData()">⬇ Export JSON</button>
+          <button class="btn-data" onclick="document.getElementById('import-file').click()">⬆ Import JSON</button>
+        </div>
+        <div style="margin-top:8px;">
+          <button class="btn-data danger" onclick="resetData()">⚠ Reset Semua Data</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="col-right">
+
+      <!-- Day Header -->
+      <div id="day-banner"></div>
+
+      <!-- Countdown (fasting days only) -->
+      <div id="countdown-wrap"></div>
+
+      <!-- Meal Plan -->
+      <div class="card">
+        <div class="card-title"><span class="icon">🍱</span> <span id="meal-plan-title">Meal Plan Hari Ini</span></div>
+        <div class="meal-list" id="meal-list"></div>
+        <div id="fasting-window-wrap"></div>
+      </div>
+
+      <!-- Workout -->
+      <div class="card">
+        <div class="card-title"><span class="icon">🏃</span> <span id="workout-title">Workout & Aktivitas</span></div>
+        <div class="workout-list" id="workout-list"></div>
+      </div>
+
+      <!-- Water Tracker -->
+      <div class="card">
+        <div class="card-title"><span class="icon">💧</span> Asupan Air Minum</div>
+        <div class="water-grid" id="water-grid"></div>
+        <div class="water-total">Total: <span id="water-total">0</span> gelas · <span id="water-ml">0</span> ml dari 2400 ml</div>
+      </div>
+
+      <!-- Food Restrictions -->
+      <div class="restrictions-card">
+        <div class="card-title" style="color:#991B1B"><span class="icon">⛔</span> Zona Larangan — Hindari Saat di Kantor</div>
+        <div class="restriction-list">
+          <div class="restriction-item">
+            <span class="r-icon">🍟</span>
+            <div class="r-text">
+              <div class="r-name">Gorengan & Deep-Fried Food</div>
+              <div class="r-why">Lemak trans tinggi, memicu inflamasi, slows metabolism, lonjakan insulin.</div>
+            </div>
+          </div>
+          <div class="restriction-item">
+            <span class="r-icon">🧋</span>
+            <div class="r-text">
+              <div class="r-name">Minuman Manis, Kopi Susu Gula Aren</div>
+              <div class="r-why">100–200 kkal kosong per gelas, spike insulin, batalkan jendela IF.</div>
+            </div>
+          </div>
+          <div class="restriction-item">
+            <span class="r-icon">🍞</span>
+            <div class="r-text">
+              <div class="r-name">Makanan Olahan Tepung Tinggi (Roti Putih, Mie Instan)</div>
+              <div class="r-why">GI sangat tinggi, menyebabkan lapar cepat, sabotase deficit kalori.</div>
+            </div>
+          </div>
+          <div class="restriction-item">
+            <span class="r-icon">🍔</span>
+            <div class="r-text">
+              <div class="r-name">Junk Food & Makanan Cepat Saji</div>
+              <div class="r-why">Sodium & kalori berlebihan, nutrisi minim, mempersulit mencapai target mingguan.</div>
+            </div>
+          </div>
+          <div class="restriction-item">
+            <span class="r-icon">🍭</span>
+            <div class="r-text">
+              <div class="r-name">Camilan Ultra-Proses (Keripik, Coklat Manis, Biscuit Kemasan)</div>
+              <div class="r-why">Addictive by design, very easy to overeat, zero satiety signal.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ── Toast ── -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─────────────────────────────────────────────
+// CONSTANTS
+// ─────────────────────────────────────────────
+const STORAGE_KEY = 'dietApp_data';
+const START_DATE = '2026-05-01';
+const END_DATE   = '2026-12-31';
+const START_WEIGHT = 87.0;
+const TARGET_WEIGHT = 61.0;
+
+// ─────────────────────────────────────────────
+// DATA MODEL
+// ─────────────────────────────────────────────
+let appData = {
+  weightLogs: [],
+  dailyProgress: {}
+};
+
+function loadData() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (raw) {
+    try { appData = JSON.parse(raw); } catch(e) { appData = {weightLogs:[], dailyProgress:{}}; }
+  }
+  // Ensure structure
+  if (!appData.weightLogs) appData.weightLogs = [];
+  if (!appData.dailyProgress) appData.dailyProgress = {};
+  // Seed initial weight log if empty
+  if (appData.weightLogs.length === 0) {
+    appData.weightLogs.push({ date: todayStr(), weight: START_WEIGHT });
+    saveData();
+  }
+}
+
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+}
+
+// ─────────────────────────────────────────────
+// DATE HELPERS
+// ─────────────────────────────────────────────
+function todayStr() {
+  const d = new Date();
+  return fmtDate(d);
+}
+
+function fmtDate(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${dd}`;
+}
+
+function parseDate(s) {
+  const [y,m,d] = s.split('-').map(Number);
+  return new Date(y,m-1,d);
+}
+
+function dayOfWeek(dateStr) {
+  return parseDate(dateStr).getDay(); // 0=Sun,1=Mon,...
+}
+
+function isFastingDay(dateStr) {
+  const d = dayOfWeek(dateStr);
+  return d === 1 || d === 4; // Mon=1, Thu=4
+}
+
+const MONTH_NAMES_ID = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const DAY_NAMES_ID_SHORT = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+const DAY_NAMES_ID_FULL = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+const MONTH_NAMES_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+// ─────────────────────────────────────────────
+// MEAL DATA
+// ─────────────────────────────────────────────
+function getMealPlan(dateStr) {
+  const fasting = isFastingDay(dateStr);
+  if (fasting) {
+    return [
+      {
+        id: 'sahur',
+        name: 'Sahur',
+        time: 'Maksimal pukul 04.15 WIB',
+        detail: '1 porsi nasi merah (100g) + 2 butir telur rebus + 1 potong dada ayam rebus (100g) + sayuran hijau tumis + 1 buah pisang + segelas air putih.',
+        badge: 'Sahur Bernutrisi',
+        icon: '🌙'
+      },
+      {
+        id: 'buka',
+        name: 'Buka Puasa',
+        time: 'Mulai pukul 17.45 WIB',
+        detail: 'Mulai dengan 3 kurma + segelas air putih (sunnah). Dilanjutkan: 1 porsi nasi merah (100g) + lauk protein (ikan/ayam/tahu tempe) + 1 porsi sayur hijau + 1 porsi buah segar. Hindari makan berlebih, makan perlahan 15–20 menit.',
+        badge: 'Buka Bertahap',
+        icon: '🌅'
+      }
+    ];
+  } else {
+    return [
+      {
+        id: 'lunch',
+        name: 'Makan Siang',
+        time: 'Pukul 12.00 WIB (Buka Jendela Makan)',
+        detail: '1 porsi nasi merah/ubi (150g) + 1 potong dada ayam panggang/rebus (120g) ATAU ikan (120g) + 1 porsi sayuran hijau (brokoli/bayam/kangkung) + 1 sdm minyak zaitun. Kunyah perlahan.',
+        badge: 'Makan Pertama',
+        icon: '🍱'
+      },
+      {
+        id: 'snack',
+        name: 'Camilan Sore',
+        time: 'Pukul 16.00 WIB',
+        detail: '1 buah apel/pir/jeruk ATAU 1 genggam kacang almond/edamame (±30g) ATAU 200ml yoghurt plain tanpa gula. Pilih satu, cukup untuk menahan lapar hingga makan malam.',
+        badge: 'Camilan Sehat',
+        icon: '🍎'
+      },
+      {
+        id: 'dinner',
+        name: 'Makan Malam',
+        time: 'Pukul 19.30 WIB (Terakhir sebelum jam 20.00)',
+        detail: '½ porsi nasi merah (75g) ATAU ganti 200g ubi/jagung + 1 potong protein (telur dadar 2 butir/tahu/tempe/ikan) + 1 porsi besar sayuran hijau rebus/kukus. Hindari karbohidrat berat setelah 19.30.',
+        badge: 'Makan Terakhir',
+        icon: '🌙'
+      }
+    ];
+  }
+}
+
+function getWorkoutPlan(dateStr) {
+  const d = dayOfWeek(dateStr);
+  const isWeekend = d === 0 || d === 6;
+  if (isWeekend) {
+    return [
+      {
+        id: 'cardio',
+        name: 'Cardio / Jogging',
+        sub: '30–45 menit, intensitas sedang, pagi atau sore hari.',
+        icon: '🏃',
+        hasStepInput: false
+      },
+      {
+        id: 'stretching_we',
+        name: 'Full Body Stretching',
+        sub: '15 menit stretching seluruh tubuh sebelum tidur.',
+        icon: '🧘',
+        hasStepInput: false
+      }
+    ];
+  } else {
+    return [
+      {
+        id: 'steps',
+        name: 'Target 7.000 Langkah',
+        sub: 'Berjalan aktif selama aktivitas harian kantor. Input jumlah langkah di bawah.',
+        icon: '👟',
+        hasStepInput: true
+      },
+      {
+        id: 'desk_hiit',
+        name: '15 Menit Desk Stretching / Home HIIT',
+        sub: 'Lakukan setelah tiba di rumah (setelah jam 19.00). Contoh: jumping jacks, wall push-up, squat.',
+        icon: '💪',
+        hasStepInput: false
+      }
+    ];
+  }
+}
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let selectedDate = todayStr();
+let calViewMonth = null; // {year, month}
+
+function initCalViewMonth() {
+  const today = parseDate(todayStr());
+  const start = parseDate(START_DATE);
+  // Clamp to valid range
+  const y = today.getFullYear();
+  const m = today.getMonth();
+  if (y < start.getFullYear() || (y === start.getFullYear() && m < start.getMonth())) {
+    calViewMonth = { year: start.getFullYear(), month: start.getMonth() };
+  } else {
+    calViewMonth = { year: y, month: m };
+  }
+}
+
+// ─────────────────────────────────────────────
+// CALENDAR
+// ─────────────────────────────────────────────
+function buildCalendar() {
+  buildMonthSelect();
+  renderCalStrip();
+}
+
+function buildMonthSelect() {
+  const sel = document.getElementById('cal-month-sel');
+  sel.innerHTML = '';
+  const start = parseDate(START_DATE);
+  const end = parseDate(END_DATE);
+  let d = new Date(start.getFullYear(), start.getMonth(), 1);
+  while (d <= end) {
+    const opt = document.createElement('option');
+    opt.value = `${d.getFullYear()}-${d.getMonth()}`;
+    opt.textContent = `${MONTH_NAMES_ID[d.getMonth()]} ${d.getFullYear()}`;
+    if (d.getFullYear() === calViewMonth.year && d.getMonth() === calViewMonth.month) opt.selected = true;
+    sel.appendChild(opt);
+    d = new Date(d.getFullYear(), d.getMonth()+1, 1);
+  }
+}
+
+function renderCalStrip() {
+  const { year, month } = calViewMonth;
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const today = todayStr();
+
+  // Update select display
+  const sel = document.getElementById('cal-month-sel');
+  sel.value = `${year}-${month}`;
+
+  // Week labels
+  const labelsEl = document.getElementById('cal-week-labels');
+  labelsEl.innerHTML = '';
+  for (let i=0; i<daysInMonth; i++) {
+    const dd = new Date(year, month, i+1);
+    const span = document.createElement('div');
+    span.className = 'cal-week-label';
+    span.textContent = DAY_NAMES_ID_SHORT[dd.getDay()];
+    labelsEl.appendChild(span);
+  }
+
+  // Days
+  const rowEl = document.getElementById('cal-days-row');
+  rowEl.innerHTML = '';
+  for (let i=1; i<=daysInMonth; i++) {
+    const dd = new Date(year, month, i);
+    const ds = fmtDate(dd);
+    const btn = document.createElement('button');
+    btn.className = 'cal-day-btn';
+    btn.setAttribute('data-date', ds);
+    btn.setAttribute('aria-label', ds);
+    btn.onclick = () => selectDate(ds);
+
+    // Classes
+    if (ds === today) btn.classList.add('today');
+    if (ds === selectedDate) btn.classList.add('selected');
+    if (appData.dailyProgress[ds]) btn.classList.add('has-data');
+    if (isFastingDay(ds)) btn.classList.add('fasting-day');
+
+    btn.innerHTML = `<div class="day-num">${i}</div><div class="day-name">${DAY_NAMES_ID_SHORT[dd.getDay()]}</div><div class="day-dot"></div>`;
+    rowEl.appendChild(btn);
+  }
+
+  // Scroll selected into view
+  setTimeout(() => {
+    const sel2 = rowEl.querySelector('.selected');
+    if (sel2) sel2.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+  }, 80);
+}
+
+function calPrev() {
+  let { year, month } = calViewMonth;
+  month--;
+  if (month < 0) { month = 11; year--; }
+  const start = parseDate(START_DATE);
+  if (year < start.getFullYear() || (year === start.getFullYear() && month < start.getMonth())) return;
+  calViewMonth = { year, month };
+  buildCalendar();
+}
+
+function calNext() {
+  let { year, month } = calViewMonth;
+  month++;
+  if (month > 11) { month = 0; year++; }
+  const end = parseDate(END_DATE);
+  if (year > end.getFullYear() || (year === end.getFullYear() && month > end.getMonth())) return;
+  calViewMonth = { year, month };
+  buildCalendar();
+}
+
+function calJumpMonth(val) {
+  const [y, m] = val.split('-').map(Number);
+  calViewMonth = { year: y, month: m };
+  buildCalendar();
+}
+
+function selectDate(ds) {
+  selectedDate = ds;
+  // Ensure calendar view matches
+  const d = parseDate(ds);
+  calViewMonth = { year: d.getFullYear(), month: d.getMonth() };
+  buildCalendar();
+  renderDayPanel();
+}
+
+// ─────────────────────────────────────────────
+// DAY PANEL
+// ─────────────────────────────────────────────
+function renderDayPanel() {
+  const ds = selectedDate;
+  const fasting = isFastingDay(ds);
+  const d = parseDate(ds);
+  const dow = DAY_NAMES_ID_FULL[d.getDay()];
+  const dStr = `${dow}, ${d.getDate()} ${MONTH_NAMES_ID[d.getMonth()]} ${d.getFullYear()}`;
+
+  // Banner
+  const banner = document.getElementById('day-banner');
+  if (fasting) {
+    banner.innerHTML = `<div class="mode-banner fasting"><div class="mode-icon">🌙</div><div class="mode-text"><div class="mode-title">Mode Puasa Sunnah</div><div class="mode-desc">${dStr} · Sahur s.d. 04.15 · Buka mulai 17.45</div></div></div>`;
+  } else {
+    banner.innerHTML = `<div class="mode-banner if"><div class="mode-icon">⏰</div><div class="mode-text"><div class="mode-title">Mode Intermittent Fasting 16:8</div><div class="mode-desc">${dStr} · Jendela makan 12.00 – 20.00</div></div></div>`;
+  }
+
+  // Countdown (only for today if fasting)
+  const cdWrap = document.getElementById('countdown-wrap');
+  cdWrap.innerHTML = '';
+  if (ds === todayStr() && fasting) {
+    cdWrap.innerHTML = `<div class="countdown-box"><div class="ctd-label">⏳ Countdown Buka Puasa</div><div class="ctd-time" id="ctd-time">--:--:--</div><div class="ctd-status" id="ctd-status">Menghitung...</div></div>`;
+    startCountdown();
+  } else if (ds === todayStr() && !fasting) {
+    renderIFWindowIndicator();
+  }
+
+  // Meal plan title
+  document.getElementById('meal-plan-title').textContent = fasting ? 'Meal Plan – Puasa Sunnah' : 'Meal Plan – IF 16:8';
+
+  // Meals
+  renderMeals(ds);
+
+  // Fasting window visual
+  const fwWrap = document.getElementById('fasting-window-wrap');
+  fwWrap.innerHTML = '';
+  if (!fasting) {
+    fwWrap.innerHTML = `
+      <div class="fasting-window">
+        <div class="fw-title">⏰ Fasting Window: 20.00 malam → 12.00 siang (16 jam)</div>
+        <div class="fw-bar-wrap"><div class="fw-bar-fill" style="width:${getFastingProgress()}%"></div></div>
+        <div class="fw-labels"><span>20.00</span><span>Puasa 16 Jam</span><span>12.00</span></div>
+      </div>`;
+  }
+
+  // Workout
+  renderWorkout(ds);
+
+  // Water
+  renderWater(ds);
+}
+
+function getFastingProgress() {
+  const now = new Date();
+  const h = now.getHours() + now.getMinutes()/60;
+  // Fasting 20:00 -> 12:00 (16h). After 20:00 is start, before 12:00 next day.
+  if (h >= 20) return ((h-20)/16)*100;
+  if (h < 12) return ((h+4)/16)*100;
+  return 100;
+}
+
+// ─────────────────────────────────────────────
+// COUNTDOWN
+// ─────────────────────────────────────────────
+let countdownInterval = null;
+
+function startCountdown() {
+  if (countdownInterval) clearInterval(countdownInterval);
+  updateCountdown();
+  countdownInterval = setInterval(updateCountdown, 1000);
+}
+
+function updateCountdown() {
+  const el = document.getElementById('ctd-time');
+  const st = document.getElementById('ctd-status');
+  if (!el) { clearInterval(countdownInterval); return; }
+
+  const now = new Date();
+  const buka = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 17, 45, 0);
+
+  if (now >= buka) {
+    el.textContent = '00:00:00';
+    if (st) st.textContent = '🎉 Sudah waktunya berbuka! Bismillah.';
+    clearInterval(countdownInterval);
+    return;
+  }
+
+  const diff = buka - now;
+  const h = Math.floor(diff/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  if (st) st.textContent = 'Menuju buka puasa pukul 17.45 WIB';
+}
+
+function renderIFWindowIndicator() {
+  // No extra HTML needed — fasting window bar handles it
+}
+
+// ─────────────────────────────────────────────
+// MEALS
+// ─────────────────────────────────────────────
+function renderMeals(ds) {
+  const meals = getMealPlan(ds);
+  const prog = appData.dailyProgress[ds] || {};
+  const el = document.getElementById('meal-list');
+  el.innerHTML = '';
+
+  meals.forEach(meal => {
+    const checked = !!prog[meal.id];
+    const div = document.createElement('div');
+    div.className = 'meal-item' + (checked ? ' checked' : '');
+    div.setAttribute('data-meal', meal.id);
+    div.onclick = () => toggleMeal(ds, meal.id);
+    div.innerHTML = `
+      <div class="meal-check"><svg width="13" height="10" viewBox="0 0 13 10" fill="none"><path d="M1 5L5 9L12 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="meal-info">
+        <div class="meal-name">${meal.icon} ${meal.name}</div>
+        <div class="meal-time">${meal.time}</div>
+        <div class="meal-detail">${meal.detail}</div>
+        <span class="meal-badge">${meal.badge}</span>
+      </div>`;
+    el.appendChild(div);
+  });
+}
+
+function toggleMeal(ds, mealId) {
+  if (!appData.dailyProgress[ds]) appData.dailyProgress[ds] = {};
+  appData.dailyProgress[ds][mealId] = !appData.dailyProgress[ds][mealId];
+  saveData();
+  renderMeals(ds);
+  updateContribGrid();
+  updateStats();
+  refreshCalDots();
+}
+
+// ─────────────────────────────────────────────
+// WORKOUT
+// ─────────────────────────────────────────────
+function renderWorkout(ds) {
+  const workouts = getWorkoutPlan(ds);
+  const prog = appData.dailyProgress[ds] || {};
+  const el = document.getElementById('workout-list');
+  el.innerHTML = '';
+
+  const dow = dayOfWeek(ds);
+  const isWeekend = dow === 0 || dow === 6;
+  document.getElementById('workout-title').textContent = isWeekend ? 'Workout – Weekend' : 'Workout & Aktivitas Harian';
+
+  workouts.forEach(w => {
+    const checked = !!prog[w.id];
+    const div = document.createElement('div');
+    div.className = 'workout-item' + (checked ? ' checked' : '');
+
+    let stepHtml = '';
+    if (w.hasStepInput) {
+      const steps = prog.steps || '';
+      stepHtml = `<div class="steps-input-wrap show" id="steps-wrap">
+        <input type="number" id="steps-input" min="0" max="50000" placeholder="Masukkan jumlah langkah..." value="${steps}"
+          oninput="saveSteps('${ds}', this.value)" onclick="event.stopPropagation()">
+      </div>`;
+    }
+
+    div.innerHTML = `
+      <div class="workout-check"><svg width="13" height="10" viewBox="0 0 13 10" fill="none"><path d="M1 5L5 9L12 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="workout-info">
+        <div class="workout-name">${w.icon} ${w.name}</div>
+        <div class="workout-sub">${w.sub}</div>
+        ${stepHtml}
+      </div>`;
+
+    div.onclick = (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      toggleWorkout(ds, w.id, div);
+    };
+
+    el.appendChild(div);
+  });
+}
+
+function toggleWorkout(ds, wId, el) {
+  if (!appData.dailyProgress[ds]) appData.dailyProgress[ds] = {};
+  appData.dailyProgress[ds][wId] = !appData.dailyProgress[ds][wId];
+  saveData();
+  el.classList.toggle('checked');
+  updateContribGrid();
+  updateStats();
+}
+
+function saveSteps(ds, val) {
+  if (!appData.dailyProgress[ds]) appData.dailyProgress[ds] = {};
+  appData.dailyProgress[ds].steps = parseInt(val) || 0;
+  saveData();
+}
+
+// ─────────────────────────────────────────────
+// WATER
+// ─────────────────────────────────────────────
+function renderWater(ds) {
+  const prog = appData.dailyProgress[ds] || {};
+  const glasses = prog.water || 0;
+  const el = document.getElementById('water-grid');
+  el.innerHTML = '';
+
+  for (let i=1; i<=8; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'glass-btn' + (i<=glasses ? ' filled' : '');
+    btn.setAttribute('aria-label', `Gelas ${i}`);
+    btn.innerHTML = `<div class="glass-icon">${i<=glasses ? '🥛' : '🫙'}</div><div class="glass-lbl">${i<=glasses ? i*300+'ml' : '300ml'}</div>`;
+    btn.onclick = () => toggleGlass(ds, i);
+    el.appendChild(btn);
+  }
+
+  document.getElementById('water-total').textContent = glasses;
+  document.getElementById('water-ml').textContent = glasses * 300;
+}
+
+function toggleGlass(ds, idx) {
+  if (!appData.dailyProgress[ds]) appData.dailyProgress[ds] = {};
+  const current = appData.dailyProgress[ds].water || 0;
+  // Click on filled → unfill from that idx; click on empty → fill up to idx
+  appData.dailyProgress[ds].water = (idx <= current) ? idx - 1 : idx;
+  saveData();
+  renderWater(ds);
+  updateContribGrid();
+  updateStats();
+}
+
+// ─────────────────────────────────────────────
+// WEIGHT
+// ─────────────────────────────────────────────
+function getCurrentWeight() {
+  if (appData.weightLogs.length === 0) return START_WEIGHT;
+  const logs = [...appData.weightLogs].sort((a,b)=>a.date.localeCompare(b.date));
+  return logs[logs.length-1].weight;
+}
+
+function updateWeightDisplay() {
+  const cw = getCurrentWeight();
+  document.getElementById('wt-display').innerHTML = `${cw.toFixed(1)} <span class="unit">kg</span>`;
+  document.getElementById('stat-current-w').textContent = cw.toFixed(1);
+
+  const total = START_WEIGHT - TARGET_WEIGHT; // 26 kg
+  const done = Math.max(0, START_WEIGHT - cw);
+  const pct = Math.min(100, Math.round((done / total) * 100));
+  document.getElementById('wt-bar').style.width = pct + '%';
+  document.getElementById('wt-progress-pct').textContent = pct + '%';
+
+  // Delta from start
+  const delta = cw - START_WEIGHT;
+  const dEl = document.getElementById('stat-delta');
+  if (delta < 0) {
+    dEl.innerHTML = `<span style="color:var(--success-text)">▼ ${Math.abs(delta).toFixed(1)} kg dari awal</span>`;
+  } else if (delta > 0) {
+    dEl.innerHTML = `<span style="color:#DC2626">▲ ${delta.toFixed(1)} kg dari awal</span>`;
+  } else {
+    dEl.textContent = 'Sama seperti awal';
+  }
+}
+
+function updateWeightLog() {
+  const el = document.getElementById('weight-log-list');
+  const logs = [...appData.weightLogs].sort((a,b)=>b.date.localeCompare(a.date));
+  if (logs.length === 0) {
+    el.innerHTML = '<div style="color:var(--gray-text);font-size:0.78rem;text-align:center;padding:12px;">Belum ada log.</div>';
+    return;
+  }
+  el.innerHTML = logs.map((log, i) => {
+    const prev = logs[i+1];
+    let deltaHtml = '';
+    if (prev) {
+      const diff = log.weight - prev.weight;
+      if (diff < 0) deltaHtml = `<span class="log-delta log-down">▼ ${Math.abs(diff).toFixed(1)}</span>`;
+      else if (diff > 0) deltaHtml = `<span class="log-delta log-up">▲ ${diff.toFixed(1)}</span>`;
+      else deltaHtml = `<span class="log-delta" style="color:var(--gray-text)">—</span>`;
+    }
+    const d = parseDate(log.date);
+    const label = `${d.getDate()} ${MONTH_NAMES_ID[d.getMonth()].slice(0,3)} ${d.getFullYear()}`;
+    return `<div class="weight-log-item"><span class="log-date">${label}</span><span class="log-w">${log.weight.toFixed(1)} kg</span>${deltaHtml}</div>`;
+  }).join('');
+}
+
+function toggleWeightInput() {
+  const wrap = document.getElementById('wt-input-wrap');
+  wrap.classList.toggle('show');
+  if (wrap.classList.contains('show')) {
+    const inp = document.getElementById('wt-input');
+    inp.value = getCurrentWeight().toFixed(1);
+    inp.focus();
+  }
+}
+
+function cancelWeightInput() {
+  document.getElementById('wt-input-wrap').classList.remove('show');
+}
+
+function confirmWeight() {
+  const val = parseFloat(document.getElementById('wt-input').value);
+  if (isNaN(val) || val < 30 || val > 300) { showToast('Masukkan berat yang valid (30–300 kg)'); return; }
+
+  // Update or add log for selected date
+  const ds = selectedDate;
+  const existing = appData.weightLogs.find(l => l.date === ds);
+  if (existing) existing.weight = val;
+  else appData.weightLogs.push({ date: ds, weight: val });
+
+  saveData();
+  cancelWeightInput();
+  updateWeightDisplay();
+  updateWeightLog();
+  updateStats();
+  showToast(`✓ Berat diperbarui: ${val.toFixed(1)} kg`);
+}
+
+// ─────────────────────────────────────────────
+// CONTRIBUTION GRID
+// ─────────────────────────────────────────────
+function buildContribGrid() {
+  const el = document.getElementById('contrib-grid');
+  el.innerHTML = '';
+  const start = parseDate(START_DATE);
+  const end = parseDate(END_DATE);
+  const today = todayStr();
+
+  // Align to Sunday
+  let cur = new Date(start);
+  while (cur.getDay() !== 0) cur = new Date(cur.getTime() - 86400000);
+
+  while (cur <= end) {
+    const week = document.createElement('div');
+    week.className = 'contrib-week';
+    for (let i=0; i<7; i++) {
+      const ds = fmtDate(cur);
+      const day = document.createElement('div');
+      day.className = 'contrib-day';
+      day.setAttribute('data-date', ds);
+      day.title = ds;
+
+      const pct = getDayCompletionLevel(ds);
+      day.setAttribute('data-pct', pct);
+
+      if (ds < START_DATE || ds > END_DATE) {
+        day.style.opacity = '0.2';
+      }
+
+      day.onclick = () => selectDate(ds);
+      week.appendChild(day);
+      cur = new Date(cur.getTime() + 86400000);
+    }
+    el.appendChild(week);
+  }
+}
+
+function updateContribGrid() {
+  document.querySelectorAll('.contrib-day').forEach(el => {
+    const ds = el.getAttribute('data-date');
+    el.setAttribute('data-pct', getDayCompletionLevel(ds));
+  });
+}
+
+function getDayCompletionLevel(ds) {
+  const prog = appData.dailyProgress[ds];
+  if (!prog) return 0;
+  const pct = getDayAdherence(ds);
+  if (pct === 0) return 0;
+  if (pct < 25) return 1;
+  if (pct < 50) return 2;
+  if (pct < 75) return 3;
+  return 4;
+}
+
+function getDayAdherence(ds) {
+  const prog = appData.dailyProgress[ds];
+  if (!prog) return 0;
+  const fasting = isFastingDay(ds);
+  const meals = getMealPlan(ds).map(m=>m.id);
+  const workouts = getWorkoutPlan(ds).map(w=>w.id);
+  const water = prog.water >= 6 ? 1 : 0; // 6+ glasses = good
+
+  let checked = 0, total = meals.length + workouts.length + 1;
+  meals.forEach(id => { if (prog[id]) checked++; });
+  workouts.forEach(id => { if (prog[id]) checked++; });
+  checked += water;
+
+  return Math.round((checked/total)*100);
+}
+
+// ─────────────────────────────────────────────
+// STATS
+// ─────────────────────────────────────────────
+function updateStats() {
+  updateWeightDisplay();
+  updateWeightLog();
+  calcStreak();
+  calcAdherence();
+}
+
+function calcStreak() {
+  let streak = 0;
+  let d = new Date(parseDate(todayStr()));
+  while (true) {
+    const ds = fmtDate(d);
+    if (ds < START_DATE) break;
+    const prog = appData.dailyProgress[ds];
+    if (!prog || getDayAdherence(ds) < 50) break;
+    streak++;
+    d = new Date(d.getTime() - 86400000);
+  }
+  document.getElementById('stat-streak').textContent = streak;
+}
+
+function calcAdherence() {
+  const keys = Object.keys(appData.dailyProgress);
+  if (keys.length === 0) {
+    document.getElementById('stat-adherence').textContent = '0%';
+    document.getElementById('stat-days-logged').textContent = '0 hari dicatat';
+    return;
+  }
+  let total = 0, sum = 0;
+  keys.forEach(ds => {
+    if (ds >= START_DATE && ds <= END_DATE) {
+      total++;
+      sum += getDayAdherence(ds);
+    }
+  });
+  const avg = total > 0 ? Math.round(sum/total) : 0;
+  document.getElementById('stat-adherence').textContent = avg + '%';
+  document.getElementById('stat-days-logged').textContent = total + ' hari dicatat';
+}
+
+function refreshCalDots() {
+  document.querySelectorAll('.cal-day-btn').forEach(btn => {
+    const ds = btn.getAttribute('data-date');
+    if (appData.dailyProgress[ds]) btn.classList.add('has-data');
+    else btn.classList.remove('has-data');
+  });
+}
+
+// ─────────────────────────────────────────────
+// EXPORT / IMPORT
+// ─────────────────────────────────────────────
+function exportData() {
+  const json = JSON.stringify(appData, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'diet_progress_backup.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('✓ Data berhasil diekspor!');
+}
+
+function importData(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const parsed = JSON.parse(ev.target.result);
+      if (!parsed.weightLogs || !parsed.dailyProgress) throw new Error('Struktur tidak valid');
+      if (!Array.isArray(parsed.weightLogs)) throw new Error('weightLogs harus array');
+      if (typeof parsed.dailyProgress !== 'object') throw new Error('dailyProgress harus object');
+      appData = parsed;
+      saveData();
+      showToast('✓ Data berhasil diimpor! Merefresh...');
+      setTimeout(() => location.reload(), 1200);
+    } catch(err) {
+      showToast('✗ Import gagal: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+function resetData() {
+  if (!confirm('Yakin ingin menghapus semua data? Tindakan ini tidak bisa dibatalkan.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  showToast('Data dihapus. Merefresh...');
+  setTimeout(() => location.reload(), 1000);
+}
+
+// ─────────────────────────────────────────────
+// TOAST
+// ─────────────────────────────────────────────
+let toastTimer = null;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+function init() {
+  loadData();
+  initCalViewMonth();
+  buildCalendar();
+  buildContribGrid();
+  updateContribGrid();
+  updateStats();
+  renderDayPanel();
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
